@@ -1,0 +1,51 @@
+﻿@model IEnumerable<PracticoA.Models.Marca>
+
+@{
+    ViewBag.Title = "Marcas";
+}
+
+<div class="page-content container container-plus">
+    <div class="card acard mt-2 mt-lg-3">
+        <div class="card-header">
+            <h3 class="card-title text-125 text-primary-d2">
+                <i class="far fa-edit text-dark-l3 mr-1"></i>
+                Gestión de Marcas
+            </h3>
+        </div>
+        <br />
+      <div>
+          <button class="btn btn-outline-success" id="openModal"><i class="fa fa-plus"> </i> Crear Marca</button>
+      </div>
+        <table class="table table-bordered">
+            <tr>
+                <th>
+                    Marca
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.nombre)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.id_marca }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.id_marca })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
+<div class="modal fade" id="modalMarca" tabindex="-1" aria-labelledby="modalMarcaLabel" aria-hidden="true"></div>
+<script>
+    $('#openModal').click(function () {
+        $.get('/Marcas/ModalMarca', function (resultado) {
+            $('#modalMarca').html(resultado)//me muestra todo el contenido del modal
+            $('#modalMarca').modal('show')// se muestra el modal
+        })
+    })
+</script>

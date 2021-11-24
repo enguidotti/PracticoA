@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Práctico 1</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/ace.min.css" rel="stylesheet" />
+    <link href="~/Fonts/font-awesome/css/all.min.css" rel="stylesheet" />
+</head>
+<body class="is-document-loaded">
+    <div class="body-container">
+        <!-- TOP BAR-->
+        <nav class="navbar navbar-expand-lg navbar-fixed navbar-blue">
+            <div class="navbar-inner">
+                <div class="navbar-intro justify-content-xl-between">
+
+                    <button type="button" class="btn btn-burger burger-arrowed static collapsed ml-2 d-flex d-xl-none" data-toggle-mobile="sidebar" data-target="#sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle sidebar">
+                        <span class="bars"></span>
+                    </button><!-- mobile sidebar toggler button -->
+
+                    <a class="navbar-brand text-white" href="http://active-themes.com/ace/demo/#">
+                        <i class="fa fa-leaf"></i>
+                        <span>Práctico</span>
+                    </a><!-- /.navbar-brand -->
+
+                    <button type="button" class="btn btn-burger mr-2 d-none d-xl-flex" data-toggle="sidebar" data-target="#sidebar" aria-controls="sidebar" aria-expanded="true" aria-label="Toggle sidebar">
+                        <span class="bars"></span>
+                    </button><!-- sidebar toggler button -->
+                </div>
+
+                <button class="navbar-toggler ml-1 mr-2 px-1" type="button" data-toggle="collapse" data-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navbar menu">
+                    <span class="pos-rel">
+                        <img class="border-2 brc-white-tp1 radius-round" width="36" src="./Basic Elements - Ace Admin_files/avatar6.jpg" alt="Jason&#39;s Photo">
+                        <span class="bgc-warning radius-round border-2 brc-white p-1 position-tr mr-n1px mt-n1px"></span>
+                    </span>
+                </button>
+
+                <div class="navbar-menu collapse navbar-collapse navbar-backdrop" id="navbarMenu">
+                    <div class="navbar-nav">
+                        <ul class="nav">
+                            <li class="nav-item dropdown order-first order-lg-last">
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                    <span class="d-inline-block d-lg-none d-xl-inline-block">
+                                        <span class="text-90" id="id-user-welcome">Bienvenido,</span>
+                                        <span class="nav-user-name">Usuario</span>
+                                    </span>
+                                    <i class="caret fa fa-angle-down d-none d-xl-block"></i>
+                                    <i class="caret fa fa-angle-left d-block d-lg-none"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <!-- FIN TOP BAR-->
+        <div class="main-container bgc-white">
+
+            <!-- LEFT MENU-->
+            <div id="sidebar" class="sidebar sidebar-fixed expandable sidebar-light has-open">
+                <div class="sidebar-inner">
+                    <div class="flex-grow-1 ace-scroll" data-ace-scroll="{}">
+
+                        <ul class="nav has-active-border active-on-right">
+                            <li class="nav-item">
+                                <a href="@Url.Action("Contact","Home")" class="nav-link">
+                                    <i class="nav-icon fa fa-tachometer-alt"></i>
+                                    <span class="nav-text fadeable">
+                                        <span>Dashboard</span>
+                                    </span>
+                                </a>
+                                <b class="sub-arrow"></b>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <script src="~/Scripts/jquery.min.js"></script>
+            <script src="~/Scripts/popper.min.js"></script>
+            <script src="~/Scripts/bootstrap.min.js"></script>
+            <script src="~/Scripts/ace.min.js"></script>
+            <!--FIN MENU-->
+            <div class="main-content" role="main">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    
+    <div class="scroll-btn-observe"></div>
+</body>
+</html>
