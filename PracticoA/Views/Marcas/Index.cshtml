@@ -13,9 +13,9 @@
             </h3>
         </div>
         <br />
-      <div>
-          <button class="btn btn-outline-success" id="openModal"><i class="fa fa-plus"> </i> Crear Marca</button>
-      </div>
+        <div>
+            <button class="btn btn-outline-success" id="openModal"><i class="fa fa-plus"> </i> Crear Marca</button>
+        </div>
         <table class="table table-bordered">
             <tr>
                 <th>
@@ -31,8 +31,12 @@
                         @Html.DisplayFor(modelItem => item.nombre)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.id_marca }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.id_marca })
+                        <button class="btn btn-warning editar" data-id="@item.id_marca">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                        <button class="btn btn-danger eliminar" data-id="@item.id_marca" data-toggle="modal" data-target="#dangerModal" >
+                            <i class="fa fa-trash-alt"></i>
+                        </button>
                     </td>
                 </tr>
             }
@@ -41,11 +45,68 @@
     </div>
 </div>
 <div class="modal fade" id="modalMarca" tabindex="-1" aria-labelledby="modalMarcaLabel" aria-hidden="true"></div>
+<!--Modal ELIMINAR-->
+<div class="modal fade" id="dangerModal" tabindex="-1" aria-labelledby="dangerModalLabel"  role="dialog">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content bgc-transparent brc-danger-m2 shadow">
+            <div class="modal-header py-2 bgc-danger-tp1 border-0  radius-t-1">
+                <h5 class="modal-title text-white-tp1 text-110 pl-2 font-bolder" id="dangerModalLabel">
+                    Eliminar Registro
+                </h5>
+
+                <button type="button" class="position-tr btn btn-xs btn-outline-white btn-h-yellow btn-a-yellow mt-1px mr-1px btn-brc-tp" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="text-150">×</span>
+                </button>
+            </div>
+
+
+            <div class="modal-body bgc-white-tp2 p-md-4 pl-md-5">
+                <div class="d-flex align-items-top mr-2 mr-md-5">
+                    <i class="fas fa-exclamation-triangle fa-2x text-orange-d2 float-rigt mr-4 mt-1"></i>
+                    <div class="text-secondary-d2 text-105">
+                        ¿Está seguro de eliminar el registro seleccionado?
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer bgc-white-tp2 border-0">
+                <button type="button" class="btn px-4 btn-light-grey" data-dismiss="modal">
+                    No
+                </button>
+
+                <button type="button" class="btn px-4 btn-danger" id="btnEliminar" data-dismiss="modal">
+                    Eliminar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
+    let idEliminar;
+    //jquery
+    //jquery llamar por id #
     $('#openModal').click(function () {
+        //método get que permite acceder al controlador
         $.get('/Marcas/ModalMarca', function (resultado) {
             $('#modalMarca').html(resultado)//me muestra todo el contenido del modal
             $('#modalMarca').modal('show')// se muestra el modal
+        })
+    })
+    //llamar por la clase .
+    $('.editar').click(function () {
+        let id = $(this).data('id')
+        $.get('/Marcas/Edit/' + id, function (result) {
+            console.log(result)
+            $('#modalMarca').html(result)
+            $('#modalMarca').modal('show')
+        })
+    })
+    $('.eliminar').click(function () {
+        idEliminar = $(this).data('id')
+    })
+    $('#btnEliminar').click(function () {
+        $.get('/Marcas/Delete/' + idEliminar, function () {
+            location.href = '/Marcas/Index'
         })
     })
 </script>
