@@ -26,12 +26,16 @@ namespace PracticoA.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Marca.Add(marca);
-                db.SaveChanges();
+                var verifica = db.Marca.FirstOrDefault(m => m.nombre == marca.nombre);
+                if (verifica == null)
+                {
+                    db.Marca.Add(marca);
+                    db.SaveChanges();
+                }
                 return RedirectToAction("Index");
             }
 
-            return PartialView("_ModalMarca", marca);
+            return RedirectToAction("Index");
         }
         public ActionResult Edit(int? id)
         {
@@ -45,8 +49,12 @@ namespace PracticoA.Controllers
         [HttpPost]
         public ActionResult Edit(Marca marca)
         {
-            db.Entry(marca).State = EntityState.Modified;
-            db.SaveChanges();
+            var verifica = db.Marca.FirstOrDefault(m => m.nombre == marca.nombre);
+            if (verifica == null)
+            {
+                db.Entry(marca).State = EntityState.Modified;
+                db.SaveChanges();
+            }
             return RedirectToAction("Index");
         }
         public ActionResult Delete(int? id)

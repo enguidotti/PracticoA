@@ -1,0 +1,71 @@
+﻿@model IEnumerable<PracticoA.Models.Modelo>
+
+@{
+    ViewBag.Title = "Modelos";
+}
+<div class="page-content container container-plus">
+    <div class="card acard mt-2 mt-lg-3">
+        <div class="card-header">
+            <h3 class="card-title text-125 text-primary-d2">
+                <i class="far fa-edit text-dark-l3 mr-1"></i>
+                Gestión de Modelos
+            </h3>
+        </div>
+        <br />
+        <div class="">
+            <div>
+                <button class="btn btn-outline-success" id="openModal"><i class="fa fa-plus"> </i> Crear Modelo</button>
+            </div>
+        </div>
+        <hr />
+        <table class="table table-bordered">
+            <thead class="bg-light">
+                <tr>
+                    <th>
+                        Modelos
+                    </th>
+                    <th>
+                        Marcas
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.modelo1
+                    </td>
+                    <td>
+                        @item.Marca.nombre
+                    </td>
+                    <td>
+                        <button class="btn btn-warning editar" data-id="@item.id_modelo">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                        <button class="btn btn-danger eliminar" data-id="@item.id_modelo" data-toggle="modal" data-target="#dangerModal">
+                            <i class="fa fa-trash-alt"></i>
+                        </button>
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
+<div class="modal fade" id="modalPopUp" tabindex="-1" aria-labelledby="modalMarcaLabel" aria-hidden="true"></div>
+<script>
+    $('#openModal').click(function () {
+        $.get('/Modelos/ModalModelo', function (result) {
+            $('#modalPopUp').html(result)
+            $('#modalPopUp').modal('show')
+        })
+    })
+    $('.editar').click(function (result) {
+        let id = $(this).data('id')
+        $.get('/Modelos/ModalModelo/' + id, function (result) {
+            $('#modalPopUp').html(result)
+            $('#modalPopUp').modal('show')
+        })
+    })
+</script>
