@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+}
+
+<div class="page-content container container-plus">
+    <div class="card acard mt-2 mt-lg-3">
+        <div class="card-header">
+            <h3 class="card-title text-125 text-primary-d2">
+                <i class="far fa-edit text-dark-l3 mr-1"></i>
+                Crear Autos
+            </h3>
+        </div>
+    </div>
+    <br />
+    <div class="col-12">
+        <div class="form-group row">
+            <label class="col-md-2 text-right">Patente</label>
+            <div class="col-md-8">
+                <input type="text" name="patente" id="patente" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-2 text-right">Marca</label>
+            <div class="col-md-8">
+                @Html.DropDownList("id_marca", null, "Seleccione Marca", htmlAttributes: new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-2 text-right">Modelo</label>
+            <div class="col-md-8">
+               <select id="id_modelo" name="id_modelo" class="form-control">
+                   <option>Seleccione Modelo</option>
+               </select>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $('#id_marca').change(function () {
+        //el select queda sin option
+        $('#id_modelo').empty();
+        //append sirve para agregar elementos
+        $('#id_modelo').append('<option value="">Seleccione modelo</option>');
+        if ($('#id_marca').val() != '') {
+            $.get('/Modelos/GetModeloByMarca/' + $('#id_marca').val(), function (result) {
+                //foreach en jquery
+                $.each(result, function (index, row) {
+                    $('#id_modelo').append('<option value=' + row.id_modelo + '>' + row.modelo1 + '</option>');
+                });
+            });
+        }
+    });
+</script>

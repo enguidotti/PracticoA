@@ -43,7 +43,7 @@
                         <button class="btn btn-warning editar" data-id="@item.id_modelo">
                             <i class="fa fa-edit"></i>
                         </button>
-                        <button class="btn btn-danger eliminar" data-id="@item.id_modelo" data-toggle="modal" data-target="#dangerModal">
+                        <button class="btn btn-danger eliminar" data-id="@item.id_modelo" data-nombre="@item.modelo1" data-toggle="modal" data-target="#dangerModal">
                             <i class="fa fa-trash-alt"></i>
                         </button>
                     </td>
@@ -54,18 +54,75 @@
     </div>
 </div>
 <div class="modal fade" id="modalPopUp" tabindex="-1" aria-labelledby="modalMarcaLabel" aria-hidden="true"></div>
+<!--Modal ELIMINAR-->
+<div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="dangerModalLabel" role="dialog">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content bgc-transparent brc-danger-m2 shadow">
+            <div class="modal-header py-2 bgc-danger-tp1 border-0  radius-t-1">
+                <h5 class="modal-title text-white-tp1 text-110 pl-2 font-bolder" id="dangerModalLabel">
+                    Eliminar Modelo
+                </h5>
+
+                <button type="button" class="position-tr btn btn-xs btn-outline-white btn-h-yellow btn-a-yellow mt-1px mr-1px btn-brc-tp" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="text-150">×</span>
+                </button>
+            </div>
+
+
+            <div class="modal-body bgc-white-tp2 p-md-4 pl-md-5">
+                <div class="d-flex align-items-top mr-2 mr-md-5">
+                    <i class="fas fa-exclamation-triangle fa-2x text-orange-d2 float-rigt mr-4 mt-1"></i>
+                    <div class="text-secondary-d2 text-105">
+                        ¿Está seguro de eliminar el modelo seleccionado: <b id="nombreModelo"></b> ?
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer bgc-white-tp2 border-0">
+                <button type="button" class="btn px-4 btn-light-grey" data-dismiss="modal">
+                    No
+                </button>
+
+                <button type="button" class="btn px-4 btn-danger" id="btnEliminar" data-dismiss="modal">
+                    Eliminar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/sweetalert.min.js"></script>
 <script>
+    let idModelo = 0;
+    //levanta el modal para crear
     $('#openModal').click(function () {
         $.get('/Modelos/ModalModelo', function (result) {
             $('#modalPopUp').html(result)
             $('#modalPopUp').modal('show')
         })
     })
-    $('.editar').click(function (result) {
+    //levanta el modal para editar
+    $('.editar').click(function () {
         let id = $(this).data('id')
         $.get('/Modelos/ModalModelo/' + id, function (result) {
             $('#modalPopUp').html(result)
             $('#modalPopUp').modal('show')
         })
     })
+    //levante el modal de eliminar
+    $('.eliminar').click(function () {
+        idModelo = $(this).data('id');
+        let nombre = $(this).data('nombre');
+        $('#modalDelete').modal('show');
+        $('#nombreModelo').text(nombre);
+    });
+
+    $('#btnEliminar').click(function () {
+        //método post para eliminar el registro
+        $.post('/Modelos/Delete', { id: idModelo }, function (result) {
+            //sweetalert con then para realizar una acción luego de mostrada  alerta
+            swal('Eliminado', 'Eliminado con éxito', 'success').then((value) => {
+                location.reload();
+            });
+        });
+    });
 </script>
